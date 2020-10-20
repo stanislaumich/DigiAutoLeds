@@ -4,6 +4,8 @@
 с сериалом это будет 5830 байт, если выкинуть сериал то 4510 из приблизно 6000
 после ещё доработки стало 3828, если анализировать пины 12 вольт
 то можно прицепить к дигиспарку
+RAM:   [=         ]  11.7% (used 60 bytes from 512 bytes)
+Flash: [=====     ]  46.7% (used 2810 bytes from 6012 bytes)
 надо будет
 лево\право\стоп\(зад) это 3-4 провода
 1 провод на управление
@@ -36,12 +38,13 @@ long del = 50;
 int cntl = 0;
 
 void getcmd() {
-  char ch;
-  int a = 0;
+  
   psl = sl; psr = sr; pss = ss;
   String s ;
 
   #ifdef serialon
+  char ch;
+  int a = 0;
   while (Serial.available()) {
     ch = Serial.read();
     if (ch != '\n') {

@@ -1,27 +1,29 @@
 #ifndef defsh
 #define defsh
-
+// под что компилируем
 #define digi
-
-#ifdef nano// nanomega 328
-#define PIN 13        // пин DI
+// наномега 328
+#ifdef nano328
+#define PIN 13        
 #define leftpin 12
 #define rightpin 11
 #define stoppin 10
 #endif
-#ifdef digi// digispark
-#define PIN 13        // пин DI
-#define leftpin 12
-#define rightpin 11
-#define stoppin 10
+// дигиспарк
+#ifdef digi
+#define PIN 4        
+#define leftpin 2
+#define rightpin 1
+#define stoppin 0
 #endif
-
+// цвета
 #define red  0xFF0000
 #define yel  0xFFA500
 #define blue  0x0000FF
 #define green  0x00FF00
 #define black  0x000000
 
-#define NUM_LEDS 30   // число диодов
+// число диодов
+#define NUM_LEDS 30   
 
 #endif
