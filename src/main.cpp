@@ -149,11 +149,8 @@ void workt(int isl, int isr, int iss) {
 
 void setup() {
   //pinMode(leftpin, INPUT);
-  //digitalWrite(leftpin, LOW);  
   //pinMode(rightpin, INPUT);
-  //digitalWrite(rightpin, LOW);
   //pinMode(stoppin, INPUT);
-  //digitalWrite(stoppin, LOW);
   #ifdef serialon
    Serial.begin(9600);
   #endif 
@@ -168,7 +165,6 @@ int ee;
 void loop() {
   getcmd();
   workt(sl, sr, ss);
-  //ee=digitalRead(leftpin);
   currm = millis();
   if (currm - prevm > del) {
     prevm = currm;

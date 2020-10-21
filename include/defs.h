@@ -13,8 +13,8 @@
 #ifdef digi
 #define PIN 4        
 #define leftpin 2
-#define rightpin 1
-#define stoppin 0
+#define stoppin 1
+#define rightpin 0
 #endif
 // цвета
 #define red  0xFF0000
