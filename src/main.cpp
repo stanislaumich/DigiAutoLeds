@@ -1,16 +1,13 @@
 #include <Arduino.h>
 #include "defs.h"
 /*
-с сериалом это будет 5830 байт, если выкинуть сериал то 4510 из приблизно 6000
-после ещё доработки стало 3828, если анализировать пины 12 вольт
-то можно прицепить к дигиспарку
 RAM:   [=         ]  11.7% (used 60 bytes from 512 bytes)
 Flash: [=====     ]  46.7% (used 2810 bytes from 6012 bytes)
 надо будет
 лево\право\стоп\(зад) это 3-4 провода
-1 провод на управление
-7812 на диоды и от неё же дигиспарк
-
+1 провод на управление 7805 на диоды и отдельно дигиспарк у него свой 7805 
+диодный делитель 2 к 1, это 10к и 5к, 5 к массе, 10 к 12 вольтам, средняя точка на пин
+вопрос где взять постоянный плюс остается открытым
 */
 
 #undef serialon
@@ -26,7 +23,6 @@ int cl = -1;
 int sl = 0; //left
 int sr = 0; //right
 int ss = 0; //stop
-//int st = 0; //test
 int psl = 0; //left
 int psr = 0; //right
 int pss = 0; //stop
@@ -38,46 +34,10 @@ long del = 50;
 int cntl = 0;
 
 void getcmd() {
+  psl = sl; 
+  psr = sr; 
+  pss = ss;
   
-  psl = sl; psr = sr; pss = ss;
-  String s ;
-
-  #ifdef serialon
-  char ch;
-  int a = 0;
-  while (Serial.available()) {
-    ch = Serial.read();
-    if (ch != '\n') {
-      s.concat(ch);
-    }
-  }
-  
-  s == "1" ? ss = 1 : a = 0;// stop on
-  s == "2" ? ss = 0 : a = 0;// stop off
-  s == "3" ? sl = 1 : a = 0;// left on
-  s == "4" ? sl = 0 : a = 0;// left off
-  s == "5" ? sr = 1 : a = 0;// right on
-  s == "6" ? sr = 0 : a = 0;// right off
-  if (s == "7") {//leftright on
-    sr = 1;
-    sl = 1;
-  }
-  if (s == "8") {// leftrighoff
-    sr = 0;
-    sl = 0;
-  }
-  if (s == "9") {// all on
-    sr = 1;
-    sl = 1;
-    ss = 1;
-  }
-  if (s == "0") {// all off
-    sr = 0;
-    sl = 0;
-    ss = 0;
-  }
-   Serial.println(s);
-  #endif
   sr=rightpin==1;
   sl=leftpin==1;
   ss=stoppin==1;
@@ -148,12 +108,10 @@ void workt(int isl, int isr, int iss) {
 }
 
 void setup() {
-  //pinMode(leftpin, INPUT);
-  //pinMode(rightpin, INPUT);
-  //pinMode(stoppin, INPUT);
-  #ifdef serialon
-   Serial.begin(9600);
-  #endif 
+  pinMode(leftpin, INPUT);
+  pinMode(rightpin, INPUT);
+  pinMode(stoppin, INPUT);
+ 
   strip.begin();
   strip.setBrightness(250);
   strip.clear();
@@ -174,7 +132,4 @@ void loop() {
     }
     strip.show();
   }
-  #ifdef serialon
-   ee==1?Serial.write("1"):Serial.write("0");
-  #endif
 }//.
