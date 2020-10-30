@@ -10,7 +10,6 @@ Flash: [=====     ]  46.7% (used 2810 bytes from 6012 bytes)
 вопрос где взять постоянный плюс остается открытым
 */
 
-#undef serialon
 #include "Adafruit_NeoPixel.h"
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
@@ -108,10 +107,14 @@ void workt(int isl, int isr, int iss) {
 }
 
 void setup() {
+  #ifndef test
   pinMode(leftpin, INPUT);
   pinMode(rightpin, INPUT);
   pinMode(stoppin, INPUT);
- 
+  #endif
+  #ifdef test
+   pinMode(pinled,OUTPUT);  
+  #endif
   strip.begin();
   strip.setBrightness(250);
   strip.clear();
@@ -121,6 +124,15 @@ void setup() {
 }
 int ee;
 void loop() {
+  #ifdef test
+  while (1){
+   digitalWrite(pinled,1);
+   delay(1000);
+   digitalWrite(pinled,0);
+   delay(1000);
+  }
+  #endif
+  #ifndef test
   getcmd();
   workt(sl, sr, ss);
   currm = millis();
@@ -132,4 +144,5 @@ void loop() {
     }
     strip.show();
   }
+ #endif
 }//.

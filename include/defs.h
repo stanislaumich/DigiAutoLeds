@@ -2,6 +2,11 @@
 #define defsh
 // под что компилируем
 #define digi
+
+// test blink 
+#define pinled 1
+#define test
+
 // наномега 328
 #ifdef nano328
 #define PIN 13        
